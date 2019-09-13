@@ -151,3 +151,17 @@ if you've finished all the bonuses in the curriculum...
     >>> median([1, 2, 3, 4])
     2.5
     ```
+
+- define a function named `format_phone_number` it should standardize different
+  phone number formats
+
+    ```python
+    >>> format_phone_number('210.867.5309')
+    '(210) 867-5309'
+    >>> format_phone_number('2018675309')
+    '(210) 867-5309'
+    >>> format_phone_number('210-867-5309')
+    '(210) 867-5309'
+    >>> format_phone_number('(210) 867-5309')
+    '(210) 867-5309'
+    ```
