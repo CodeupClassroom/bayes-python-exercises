@@ -32,6 +32,30 @@ and additional materials for the python module.
 
     Replacing `myscript.py` with the name of your python file.
 
+1. Doctests
+
+    If you include an interactive python session's output in your functions'
+    docstrings, you can use the `doctest` module to test your code.
+
+    Imagine the following code is in `myscript.py`:
+
+    ```python
+    def sayhello():
+        '''
+        Returns a nice, friendly greeting.
+
+        >>> return_value = sayhello()
+        >>> return_value
+        'Hello, World!'
+        '''
+    ```
+
+    To test it, run this from your terminal:
+
+    ```
+    python -m doctest myscript.py
+    ```
+
 ## Function Bonuses
 
 if you've finished all the bonuses in the curriculum...
@@ -86,4 +110,44 @@ if you've finished all the bonuses in the curriculum...
     {"mean": 2.0, "sum": 8, "rolls": [1, 3, 2, 2]}
     >>> roll_dice('2d10')
     {"mean": 5.5, "sum": 11, "rolls": [8, 3]}
+    ```
+
+- Write a function named `chunk`. It should split a list into `n`-sized chunks
+
+    ```python
+    my_list = [1, 2, 3, 4, 5, 6, 7, 8]
+    >>> chunk(my_list, 2)
+    [[1, 2], [3, 4], [5, 6], [7, 8]]
+    >>> chunk(my_list, 3)
+    [[1, 2, 3], [4, 5, 6], [7, 8]]
+    ```
+
+- Write a function named `map` it should accept a list and a function and apply
+  the function to every element in the list
+
+    ```python
+    map([1, 2, 3], lambda n: n + 1)
+    [2, 3, 4]
+    ```
+
+- Write a function named `filter`. It should accept a list and a function and
+  return the elements of the list for which the passed function returns true
+
+    ```python
+    >>> def is_vowel(c):
+    ...    return c in 'aeiou'
+
+    >>> filter(['a', 'b', 'c', 'd', 'e'], is_vowel)
+    ['a', 'e']
+    ```
+
+- define a `median` function that returns the median of a list of numbers. Be
+  sure to handle the case where there are an even number of elements in the
+  list.
+
+    ```python
+    >>> median([1, 2, 3])
+    2
+    >>> median([1, 2, 3, 4])
+    2.5
     ```
