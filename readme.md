@@ -115,7 +115,7 @@ if you've finished all the bonuses in the curriculum...
 - Write a function named `chunk`. It should split a list into `n`-sized chunks
 
     ```python
-    my_list = [1, 2, 3, 4, 5, 6, 7, 8]
+    >>> my_list = [1, 2, 3, 4, 5, 6, 7, 8]
     >>> chunk(my_list, 2)
     [[1, 2], [3, 4], [5, 6], [7, 8]]
     >>> chunk(my_list, 3)
@@ -158,7 +158,7 @@ if you've finished all the bonuses in the curriculum...
     ```python
     >>> format_phone_number('210.867.5309')
     '(210) 867-5309'
-    >>> format_phone_number('2018675309')
+    >>> format_phone_number('2108675309')
     '(210) 867-5309'
     >>> format_phone_number('210-867-5309')
     '(210) 867-5309'
