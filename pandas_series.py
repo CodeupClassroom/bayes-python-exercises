@@ -66,7 +66,7 @@ df.columns = ["fruit_name", "count_of_a"]
 df
 
 
-# Use the .apply method and a lambda function to find the fruit(s) containing two or more "o" letters in the name.
+# Use the .apply method and a lambda function to fin d the fruit(s) containing two or more "o" letters in the name.
 with_two_or_more_o = fruit_names.apply(lambda x: x.count("o") >= 2)
 fruit_names[with_two_or_more_o]
 
