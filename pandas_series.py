@@ -64,3 +64,27 @@ for i, fruit in enumerate(fruit_names):
 df = pd.DataFrame(list(zip(fruit_names, counts_of_a)))
 df.columns = ["fruit_name", "count_of_a"]
 df
+
+
+# Use the .apply method and a lambda function to find the fruit(s) containing two or more "o" letters in the name.
+with_two_or_more_o = fruit_names.apply(lambda x: x.count("o") >= 2)
+fruit_names[with_two_or_more_o]
+
+# Same operation using indexing and subsetting (instead of .apply and lambda)
+fruits[fruits.str.count("o") >= 2]
+
+# Write the code to get only the fruits containing "berry" in the name
+contains_berry = fruits.apply(lambda x: "berry" in x)
+fruits[contains_berry]
+
+# or we can use .str.contains
+fruits[fruits.str.contains("berry")]
+
+# Write the code to get only the fruits containing "apple" in the name
+contains_apple = fruits.str.contains("apple")
+fruits[contains_apple]
+
+# Which fruit has the highest amount of vowels?
+# get the highest vowel count first
+id_of_max = fruits.apply(count_vowels).idxmax() # gives us the index value of the highest vowel count
+fruits[id_of_max]
