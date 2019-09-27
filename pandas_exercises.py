@@ -111,8 +111,13 @@ title_counts = df.groupby("number_of_titles").count()
 title_counts = title_counts.reset_index()
 title_counts
 
-# df.plot(x ='emp_no', y='number_of_titles', kind = 'bar')
-
+# This seems to freeze my VSCode right now... 
+# df.plot(x ='number_of_titles', y='number_of_employees', kind = 'bar')
 
 # For each title, find the hire date of the employee that was hired most recently with that title.
-# Write the code necessary to create a cross tabulation of the number of titles by department. (Hint: this will involve a combination of SQL and python/pandas code)
+employee_titles.groupby("title").hire_date.max()
+
+# create a cross tabulation of the number of titles by department. 
+# (Hint: this will involve a combination of SQL and python/pandas code)
+
+
