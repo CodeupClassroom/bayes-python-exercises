@@ -10,10 +10,18 @@ from pydataset import data
 # Do automatic or manual cars have better miles per gallon?
 
 mpg = data('mpg')
+mpg["mpg"] = (mpg.hwy + mpg.cty) / 2
+
+automatic = mpg[mpg.trans.str.contains("auto")]
+manual = mpg[mpg.trans.str.contains("manual")]
+
+auto_avg = automatic.mpg.mean()
+manual_avg = manual.mpg.mean()
+print("automatic", auto_avg)
+print("manual:", manual_avg)
 
 # On average, which manufacturer has the best miles per gallon?
-city_and_hwy = mpg.groupby("manufacturer").hwy.agg("max") + mpg.groupby("manufacturer").cty.agg("max")
-number_of_manufacturers = len(mpg.manufacturer.unique())
+city_and_hwy = mpg.groupby("manufacturer").hwy.agg("mean") + mpg.groupby("manufacturer").cty.agg("mean")
 average_mpg = city_and_hwy / 2
 best_mpg_manufacturer = average_mpg.idxmax()
 best_mpg_manufacturer
@@ -22,22 +30,32 @@ best_mpg_manufacturer
 number_of_different_manufacturers = len(mpg.manufacturer.unique())
 number_of_different_manufacturers
 
-# How many different models are there?
-number_of_different_models = len(mpg.model.unique())
+# How many di fferent models are there?
+number_of_different_models = mpg.model.nunique()
 number_of_different_models
 
 # Do automatic or manual cars have better miles per gallon?
+mpg.head()
+
 mpg["transmission"] = mpg.trans.str.partition("(")[0]
+
 mpg = mpg.drop(columns = ["trans"])
 mpg["average_mpg"] = (mpg.cty + mpg.hwy) / 2
-mpg
-mpg.groupby("transmission").agg(["max"], axis="average_mpg")
-
 
 mpg_and_transmission_type = mpg[["average_mpg", "transmission"]]
+mpg_and_transmission_type.head()
 mpg_and_transmission_type.groupby("transmission").mean()
 best_mpg_transmission_type = mpg_and_transmission_type.groupby("transmission").mean().idxmax()
 best_mpg_transmission_type
+
+# another approach to the above problem without grouping by
+# mpg["mpg"] = (mpg.hwy + mpg.cty) / 2
+
+# automatic = mpg[mpg.trans.str.contains("auto")]
+# manual = mpg[mpg.trans.str.contains("manual")]
+
+# auto_avg = automatic.mpg.mean()
+# manual_avg = manual.mpg.mean()
 
 
 ## Exercise 2
@@ -67,12 +85,14 @@ outer_join
 def get_db_url(user, host, password, database_name):
     url = f'mysql+pymysql://{user}:{password}@{host}/{database_name}'
     return url
-    
+ 
 # Use your function to obtain a connection to the employees database.
 from env import host, user, password
 
 employees_db_url = get_db_url(user, host, password, "employees")
-query = "select * from employees"
+employees_db_url
+
+query = "select * from employees limit 10"
 pd.read_sql(query, employees_db_url)
 
 # Once you have successfully run a query:
@@ -100,6 +120,7 @@ employee_titles.head()
 
 # Visualize how frequently employees change titles.
 df = employee_titles.groupby("emp_no").count()
+df.head()
 df = df.reset_index()
 df = df.rename(columns={"title":"number_of_titles"})
 df = df[["number_of_titles", "emp_no"]]
@@ -111,8 +132,7 @@ title_counts = df.groupby("number_of_titles").count()
 title_counts = title_counts.reset_index()
 title_counts
 
-# This seems to freeze my VSCode right now... 
-# df.plot(x ='number_of_titles', y='number_of_employees', kind = 'bar')
+df.plot(x ='number_of_titles', y='number_of_employees', kind = 'bar')
 
 # For each title, find the hire date of the employee that was hired most recently with that title.
 employee_titles.groupby("title").hire_date.max()
