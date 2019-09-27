@@ -119,5 +119,19 @@ employee_titles.groupby("title").hire_date.max()
 
 # create a cross tabulation of the number of titles by department. 
 # (Hint: this will involve a combination of SQL and python/pandas code)
+query = """
+    select *
+    from departments
+    join dept_emp using(dept_no)
+    join titles using(emp_no)
+    where titles.to_date > now()
+    and dept_emp.to_date > now()
+"""
 
+df = pd.read_sql(query, employees_db_url)
+df.head()
 
+# number of titles per department
+
+number_of_titles_per_dept = pd.crosstab(df.title, df.dept_name)
+number_of_titles_per_dept
