@@ -34,8 +34,6 @@ mpg
 mpg.groupby("transmission").agg(["max"], axis="average_mpg")
 
 
-
-
 mpg_and_transmission_type = mpg[["average_mpg", "transmission"]]
 mpg_and_transmission_type.groupby("transmission").mean()
 best_mpg_transmission_type = mpg_and_transmission_type.groupby("transmission").mean().idxmax()
@@ -82,6 +80,7 @@ pd.read_sql(query, employees_db_url)
 #     Intentionally make an error in your SQL query. What does the error message look like?
 
 # Read the employees and titles tables into two separate dataframes
+query = "SELECT * from employees"
 employees = pd.read_sql(query, employees_db_url)
 
 query = "SELECT * FROM titles"
@@ -96,8 +95,24 @@ unique_titles = unique_titles.reset_index()
 unique_titles.plot(x ='title', y='number_with_title', kind = 'bar')
 
 # Join the employees and titles dataframes together.
-
+employee_titles = pd.merge(employees, titles, how="inner", left_on="emp_no", right_on="emp_no")
+employee_titles.head()
 
 # Visualize how frequently employees change titles.
+df = employee_titles.groupby("emp_no").count()
+df = df.reset_index()
+df = df.rename(columns={"title":"number_of_titles"})
+df = df[["number_of_titles", "emp_no"]]
+df.head()
+
+df = df.rename(columns={"emp_no":"number_of_employees"})
+
+title_counts = df.groupby("number_of_titles").count()
+title_counts = title_counts.reset_index()
+title_counts
+
+# df.plot(x ='emp_no', y='number_of_titles', kind = 'bar')
+
+
 # For each title, find the hire date of the employee that was hired most recently with that title.
 # Write the code necessary to create a cross tabulation of the number of titles by department. (Hint: this will involve a combination of SQL and python/pandas code)
