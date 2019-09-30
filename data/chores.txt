@@ -1,0 +1,4 @@
+take out the paper
+take out the trash
+create .gitignore file
+add-commit-and push your work (but not your passwords) every day
